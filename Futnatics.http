@@ -1,0 +1,6 @@
+@Futnatics_HostAddress = http://localhost:5168
+
+GET {{Futnatics_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
