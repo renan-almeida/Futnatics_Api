@@ -29,5 +29,18 @@ namespace Futnatics.Controllers
         {
             return Ok(Clientes.FirstOrDefault(pe => pe.Id == id));
         }
-    }
+
+      /*0  [HttpPost("AdicionarCliente")]
+    public ActionResult<Cliente> AdicionarCliente([FromBody] Cliente novoCliente)
+    {
+        if (novoCliente == null)
+        {
+            return BadRequest("Dados do cliente são inválidos.");
+        }
+
+        // Adicione o cliente à lista (ou ao banco de dados, em um cenário real)
+        novoCliente.Id = clientes.Count + 1; // Definindo um Id temporário
+        clientes.Add(novoCliente);
+    }*/
+}
 }

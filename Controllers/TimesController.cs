@@ -3,52 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Futnatics.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Mvc;
 
-
-namespace Futnatics.Data
+namespace Futnatics.Controllers
 {
-    public class DataContext : DbContext
+    [ApiController]
+    [Route("[controller]")]
+    public class TimesController : ControllerBase
     {
-        public DataContext (DbContextOptions<DataContext> options)
-            : base(options)
+        private static List<Time> Times = new List<Time>()
         {
-
-        }
-
-        public DbSet<Cliente> CLIENTES { get; set; }
-        public DbSet<Partida> PARTIDAS { get; set; }
-        public DbSet<Time> TIMES { get; set; }
-       
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Cliente>().ToTable("CLIENTES");
-            modelBuilder.Entity<Partida>().ToTable("PARTIDAS");
-            modelBuilder.Entity<Time>().ToTable("TIMES");
-            
-        
-    
-
-            modelBuilder.Entity<Cliente>().HasData
-            (
-                 new Cliente() { Id = 1, Nome = "Renan", Cpf = 546812798, Email = "Renanalmeidadantas2007@gmail.com" , Endereco = "Rua Jonas Cardoso N: 16B " , Rg = 1241454213},
-                new Cliente { Id = 2, Nome = "Danillo", Cpf = 124345325, Email = "DanilloLacerdad470" ,Endereco = "Rua Serra Do Apodi", Rg = 235252436},
-                new Cliente { Id = 3, Nome = "Felipe", Cpf = 21345235, Email = "FelipeSilva@gmail.com", Endereco = "Rua Elisa do Apodi", Rg = 123542253}
-            );
-            
-            
-
-            modelBuilder.Entity<Partida>().HasData 
-            (
-                new Partida() {Id = 1, Data = DateTime.Parse("04/11/2024 20:00"), Estadio = "Neo Quimica Arena", TimeCasa =  "Corinthians", TimeFora = "Palmeiras"},
-                new Partida() {Id = 2, Data =  DateTime.Parse("09/11/2024 16:30"), Estadio = "Barradão", TimeCasa = "Vitoria", TimeFora = "Corinthians"}
-            );
-
-            modelBuilder.Entity<Time>().HasData
-            (
-                 new Time() {Id = 1,
+            new Time() {Id = 1,
              Nome = "Corinthians",
               Sigla = "Sccp",
                FundadoEm = new DateTime(1910 ,10, 01),
@@ -103,29 +68,75 @@ namespace Futnatics.Data
             Mascote =  "Touro",
             Logo =  "https://www.google.com/url?sa=i&url=https%3A%2F%2Fworldvectorlogo.com%2Fpt%2Flogo%2Fcorinthians-1&psig=AOvVaw3JIoaqcowrWn3X94Ey9eGX&ust=1732226050083000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODnvYTz64kDFQAAAAAdAAAAABAJ"
         }
-            );
-             base.OnModelCreating(modelBuilder);
-        }
-
-        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-        {
-            configurationBuilder.Properties<string>()
-                .HaveColumnType("varchar").HaveMaxLength(200);
-
-            base.ConfigureConventions(configurationBuilder);
-        }
-
-        
-
-        
-            
-
-           
-
-
-
-
+};
+        [HttpGet]
+    public IActionResult GetTimes()
+    {
+        return Ok (Times);
     }
 
+    // GET api/times/1
+    [HttpGet("{id}")]
+    public IActionResult GetTime(int id)
+    {
+        var time = Times.FirstOrDefault(t => t.Id == id);
+        if (time == null)
+            return NotFound("Time não encontrado.");
+        
+        return Ok(time);
+    }
+
+    // POST api/times
+    [HttpPost]
+    public IActionResult AdicionarTime([FromBody] Time novoTime)
+    {
+        if (novoTime == null)
+            return BadRequest("Dados inválidos.");
+
+        novoTime.Id = Times.Max(t => t.Id) + 1; // Atribui um ID único
+        Times.Add(novoTime);
+        
+        return CreatedAtAction(nameof(GetTime), new { id = novoTime.Id }, novoTime);
+    }
+     [HttpDelete("{id}")]
+    public IActionResult DeletarTime(int id)
+    {
+        var time = Times.FirstOrDefault(t => t.Id == id);
+        if (time == null)
+            return NotFound("Time não encontrado.");
+
+        Times.Remove(time);
+        return NoContent();
+    }
+
+    // GET api/times/nome/{nome}
+[HttpGet("nome/{nome}")]
+public IActionResult GetTimeByName(string nome)
+{
+    var time = Times.FirstOrDefault(t => t.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
+
+    if (time == null)
+        return NotFound("Time não encontrado.");
+
+    return Ok(time);
 }
 
+
+
+
+
+    
+}
+}
+  /* public int Id {get; set; }
+          public string Nome {get; set; }
+         public string Sigla { get; set; }
+    public DateTime FundadoEm { get; set; }
+    public string Cidade { get; set; }
+    public string Estado { get; set; }
+    public string Pais { get; set; }
+    public string Estadio { get; set; }
+     public string MaiorRival { get; set; }
+
+     public string Mascote {get; set; }
+      public string Logo { get; set; }*/
