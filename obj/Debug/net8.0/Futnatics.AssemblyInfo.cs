@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Futnatics")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb0697a8e251e16df2a6488f317ef7b1db8e5a16")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38da3de9cd7e02d253d907ccacbca4d327c23be1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Futnatics")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Futnatics")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

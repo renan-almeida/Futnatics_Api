@@ -110,7 +110,7 @@ namespace Futnatics.Data
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
             configurationBuilder.Properties<string>()
-                .HaveColumnType("varchar").HaveMaxLength(200);
+                .HaveColumnType("varchar").HaveMaxLength(350);
 
             base.ConfigureConventions(configurationBuilder);
         }
