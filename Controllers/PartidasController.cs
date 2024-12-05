@@ -34,16 +34,14 @@ namespace Futnatics.Controllers
         }
 
        /* [HttpPost("AdicionarPartida")]
-    public ActionResult<Cliente> AdicionarCliente([FromBody] Partida novaPartida)
+    public ActionResult<Cliente> AdicionarPartida([FromBody] Partida novaPartida)
     {
         if (novaPartida == null)
         {
             return BadRequest("Dados da partida são inválidos.");
         }
 
-        // Adicione o cliente à lista (ou ao banco de dados, em um cenário real)
-        novaPartida.Id = novaPartida.Count + 1; // Definindo um Id temporário
-        Partida.Add(novaPartida);
+    
     }*/
 
      [HttpGet("hoje")]
